@@ -27,6 +27,10 @@ namespace ChallengeCalculator.Console
                     var result = calculator.Add(numbers);
                     System.Console.WriteLine($"Result: {result}");
                 }
+                catch (ArgumentException ex)
+                {
+                    System.Console.WriteLine($"Error: {ex.Message}");
+                }
                 catch (Exception ex)
                 {
                     System.Console.WriteLine($"An unexpected error occurred: {ex.Message}");
@@ -48,6 +52,12 @@ namespace ChallengeCalculator.Console
                                  return number; // Returns 0 if parsing fails
                              })
                              .ToArray();
+
+            var negativeNumbers = numbers.Where(n => n < 0).ToList();
+            if (negativeNumbers.Any())
+            {
+                throw new ArgumentException($"Input includes negative numbers: {string.Join(", ", negativeNumbers)}");
+            }
 
             return numbers;
         }

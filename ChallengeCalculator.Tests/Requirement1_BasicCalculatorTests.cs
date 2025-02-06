@@ -37,10 +37,11 @@ namespace ChallengeCalculator.Tests
         }
 
         [Test]
-        public void Add_NegativeNumbers_ReturnsSum()
+        public void Add_NegativeNumbers_ThrowsException()
         {
-            var numbers = Program.ParseInput("4,-3");
-            Assert.That(_calculator.Add(numbers), Is.EqualTo(1));
+            var input = "4,-3";
+            var ex = Assert.Throws<ArgumentException>(() => Program.ParseInput(input));
+            Assert.That(ex.Message, Is.EqualTo("Input includes negative numbers: -3"));
         }
 
         [Test]
