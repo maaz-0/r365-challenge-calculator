@@ -19,11 +19,26 @@ namespace ChallengeCalculator.Core
             // Check for custom delimiter format
             if (input.StartsWith("//"))
             {
-                var parts = input.Split(new[] { "\\n" }, 2, StringSplitOptions.None);
-                if (parts.Length == 2)
+                if (input.StartsWith("//[") && input.Contains("]\\n"))
                 {
-                    delimiter = Regex.Escape(parts[0].Substring(2));
-                    numbersInput = parts[1];
+                    // Format: //[delimiter]\n
+                    var closingBracketIndex = input.IndexOf("]\\n");
+                    if (closingBracketIndex > 3) // Make sure there's content between [ and ]
+                    {
+                        var customDelimiter = input.Substring(3, closingBracketIndex - 3);
+                        delimiter = Regex.Escape(customDelimiter);
+                        numbersInput = input.Substring(closingBracketIndex + 3);
+                    }
+                }
+                else
+                {
+                    // Original single-character format: //delimiter\n
+                    var parts = input.Split(new[] { "\\n" }, 2, StringSplitOptions.None);
+                    if (parts.Length == 2)
+                    {
+                        delimiter = Regex.Escape(parts[0].Substring(2));
+                        numbersInput = parts[1];
+                    }
                 }
             }
 
