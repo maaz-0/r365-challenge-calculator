@@ -18,11 +18,8 @@ namespace ChallengeCalculator.Console
                 System.Console.WriteLine("         //#\\n2#5 (using # as delimiter)");
                 System.Console.WriteLine("         //[***]\\n11***22***33 (using *** as delimiter)");
                 System.Console.WriteLine("         //[*][!!][r9r]\\n11r9r22*33!!44 (using multiple delimiters)");
-                System.Console.WriteLine("(numbers > 1000 will be ignored, type 'exit' to quit)");
+                System.Console.WriteLine("(numbers > 1000 will be ignored, press Ctrl+C to quit)");
                 var input = System.Console.ReadLine();
-
-                if (input?.ToLower() == "exit")
-                    break;
 
                 try
                 {
