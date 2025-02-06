@@ -102,5 +102,54 @@ namespace ChallengeCalculator.Tests
             var result = _calculator.Add(numbers);
             Assert.That(result, Is.EqualTo(15)); // 1 + 2 + 3 + 4 + 5
         }
+
+        [Test]
+        public void Add_AllowNegativeNumbers_ReturnsSum()
+        {
+            var parser = new Parser("\\n", true); // Allow negative numbers
+            var input = "1,-2,3,-4,5";
+            var numbers = parser.Parse(input);
+            var result = _calculator.Add(numbers);
+            Assert.That(result, Is.EqualTo(3)); // 1 + (-2) + 3 + (-4) + 5
+        }
+
+        [Test]
+        public void Add_AllowNegativeNumbers_WithCustomDelimiter()
+        {
+            var parser = new Parser("\\n", true);
+            var input = "//[***]\\n1***-2***3***-4***5";
+            var numbers = parser.Parse(input);
+            var result = _calculator.Add(numbers);
+            Assert.That(result, Is.EqualTo(3)); // 1 + (-2) + 3 + (-4) + 5
+        }
+
+        [Test]
+        public void Add_AllowNegativeNumbers_WithAlternateDelimiter()
+        {
+            var parser = new Parser("|", true);
+            var input = "1|-2|3|-4|5";
+            var numbers = parser.Parse(input);
+            var result = _calculator.Add(numbers);
+            Assert.That(result, Is.EqualTo(3)); // 1 + (-2) + 3 + (-4) + 5
+        }
+
+        [Test]
+        public void Add_AllowNegativeNumbers_WithMixedDelimiters()
+        {
+            var parser = new Parser("$", true);
+            var input = "//[***]\\n1***-2$3***-4$5";
+            var numbers = parser.Parse(input);
+            var result = _calculator.Add(numbers);
+            Assert.That(result, Is.EqualTo(3)); // 1 + (-2) + 3 + (-4) + 5
+        }
+
+        [Test]
+        public void Add_DenyNegativeNumbers_DefaultBehavior()
+        {
+            var parser = new Parser(); // Default behavior: deny negative numbers
+            var input = "1,-2,3";
+            var ex = Assert.Throws<ArgumentException>(() => parser.Parse(input));
+            Assert.That(ex.Message, Is.EqualTo("Input includes negative numbers: -2"));
+        }
     }
 } 

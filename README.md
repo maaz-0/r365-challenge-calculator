@@ -27,12 +27,18 @@ dotnet build
 
 3. Run the console application:
 ```bash
-# Run with default settings
+# Run with default settings (negative numbers not allowed)
 cd ChallengeCalculator.Console
 dotnet run
 
 # Run with a custom alternate delimiter (instead of \n)
 dotnet run --alt-delimiter=|
+
+# Run with negative numbers allowed
+dotnet run --allow-negative
+
+# Run with both options
+dotnet run --alt-delimiter=| --allow-negative
 ```
 
 ## Command-line Arguments
@@ -45,6 +51,20 @@ The application supports the following command-line arguments:
   dotnet run --alt-delimiter=|
   # Input: 1|2,3|4 will be treated as "1\n2,3\n4"
   ```
+
+- `--allow-negative`: Enable support for negative numbers in calculations
+  ```bash
+  # Example with negative numbers enabled
+  dotnet run --allow-negative
+  # Input: 1,-2,3,-4 will return -2 (1 + -2 + 3 + -4)
+  ```
+
+Arguments can be combined:
+```bash
+# Use | as delimiter and enable negative numbers
+dotnet run --alt-delimiter=| --allow-negative
+# Input: 1|-2|3 will return 2 (1 + -2 + 3)
+```
 
 ## Input Formats
 
@@ -79,7 +99,9 @@ The calculator supports various input formats:
 ## Rules
 
 - Numbers greater than 1000 are ignored
-- Negative numbers are not allowed (will throw an exception)
+- Negative numbers:
+  - Not allowed by default
+  - Can be enabled with --allow-negative flag
 - Invalid numbers are treated as 0
 - Multiple delimiters can be used together
 - Delimiters can be of any length

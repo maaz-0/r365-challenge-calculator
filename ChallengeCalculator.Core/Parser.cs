@@ -9,10 +9,12 @@ namespace ChallengeCalculator.Core
     {
         private const int MaxValidNumber = 1000;
         private readonly string _alternateDelimiter;
+        private readonly bool _allowNegativeNumbers;
 
-        public Parser(string alternateDelimiter = "\\n")
+        public Parser(string alternateDelimiter = "\\n", bool allowNegativeNumbers = false)
         {
             _alternateDelimiter = alternateDelimiter;
+            _allowNegativeNumbers = allowNegativeNumbers;
         }
 
         public int[] Parse(string input)
@@ -23,7 +25,11 @@ namespace ChallengeCalculator.Core
             var processedInput = ProcessAlternateDelimiter(input);
             var (delimiter, numbersInput) = ExtractDelimiterAndNumbers(processedInput);
             var numbers = ParseNumbers(numbersInput, delimiter);
-            ValidateNumbers(numbers);
+            
+            if (!_allowNegativeNumbers)
+            {
+                ValidateNumbers(numbers);
+            }
 
             return numbers;
         }

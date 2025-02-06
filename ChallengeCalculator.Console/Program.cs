@@ -10,14 +10,24 @@ namespace ChallengeCalculator.Console
         {
             // Process command line arguments
             var alternateDelimiter = "\\n";
-            if (args.Length > 0 && args[0].StartsWith("--alt-delimiter="))
+            var allowNegativeNumbers = false;
+
+            foreach (var arg in args)
             {
-                alternateDelimiter = args[0].Substring("--alt-delimiter=".Length);
-                System.Console.WriteLine($"Using alternate delimiter: '{alternateDelimiter}'");
+                if (arg.StartsWith("--alt-delimiter="))
+                {
+                    alternateDelimiter = arg.Substring("--alt-delimiter=".Length);
+                    System.Console.WriteLine($"Using alternate delimiter: '{alternateDelimiter}'");
+                }
+                else if (arg == "--allow-negative")
+                {
+                    allowNegativeNumbers = true;
+                    System.Console.WriteLine("Negative numbers are allowed");
+                }
             }
 
             var calculator = new Calculator();
-            var parser = new Parser(alternateDelimiter);
+            var parser = new Parser(alternateDelimiter, allowNegativeNumbers);
 
             while (true)
             {
@@ -26,7 +36,7 @@ namespace ChallengeCalculator.Console
                 System.Console.WriteLine($"         //#\\n2#5 (using # as delimiter)");
                 System.Console.WriteLine($"         //[***]\\n11***22***33 (using *** as delimiter)");
                 System.Console.WriteLine($"         //[*][!!][r9r]\\n11r9r22*33!!44 (using multiple delimiters)");
-                System.Console.WriteLine("(numbers > 1000 will be ignored, press Ctrl+C to quit)");
+                System.Console.WriteLine($"(numbers > 1000 will be ignored, {(allowNegativeNumbers ? "negative numbers allowed" : "negative numbers not allowed")}, press Ctrl+C to quit)");
                 var input = System.Console.ReadLine();
 
                 try
