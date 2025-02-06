@@ -13,8 +13,22 @@ namespace ChallengeCalculator.Core
             if (string.IsNullOrWhiteSpace(input))
                 return Array.Empty<int>();
 
-            // Split by comma or \n
-            var numbers = Regex.Split(input, @",|\\n")
+            string delimiter = ",|\\\\n"; // Default delimiters
+            string numbersInput = input;
+
+            // Check for custom delimiter format
+            if (input.StartsWith("//"))
+            {
+                var parts = input.Split(new[] { "\\n" }, 2, StringSplitOptions.None);
+                if (parts.Length == 2)
+                {
+                    delimiter = Regex.Escape(parts[0].Substring(2));
+                    numbersInput = parts[1];
+                }
+            }
+
+            // Split by delimiter(s)
+            var numbers = Regex.Split(numbersInput, delimiter)
                              .Where(s => !string.IsNullOrWhiteSpace(s))
                              .Select(part =>
                              {

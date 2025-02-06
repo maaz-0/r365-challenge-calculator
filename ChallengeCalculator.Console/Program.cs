@@ -12,8 +12,10 @@ namespace ChallengeCalculator.Console
 
             while (true)
             {
-                System.Console.WriteLine("\nEnter numbers separated by comma or '\\n'.");
-                System.Console.WriteLine("Example: 1,2\\n3,4 (numbers > 1000 will be ignored)");
+                System.Console.WriteLine("\nEnter numbers separated by comma, '\\n', or use a custom delimiter:");
+                System.Console.WriteLine("Examples: 1,2\\n3,4");
+                System.Console.WriteLine("         //#\\n2#5 (using # as delimiter)");
+                System.Console.WriteLine("(numbers > 1000 will be ignored, type 'exit' to quit)");
                 var input = System.Console.ReadLine();
 
                 if (input?.ToLower() == "exit")
@@ -23,7 +25,10 @@ namespace ChallengeCalculator.Console
                 {
                     var numbers = parser.Parse(input ?? string.Empty);
                     var result = calculator.Add(numbers);
+                    var currentColor = System.Console.ForegroundColor;
+                    System.Console.ForegroundColor = ConsoleColor.Green;
                     System.Console.WriteLine($"Result: {result}");
+                    System.Console.ForegroundColor = currentColor;
                 }
                 catch (ArgumentException ex)
                 {
