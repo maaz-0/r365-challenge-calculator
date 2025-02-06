@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChallengeCalculator.Core", "ChallengeCalculator.Core\ChallengeCalculator.Core.csproj", "{820E4790-A287-43FF-8D1B-28C48642FD05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChallengeCalculator.Tests", "ChallengeCalculator.Tests\ChallengeCalculator.Tests.csproj", "{4E08F63D-3683-4245-B3FF-3C80E353351B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChallengeCalculator.Console", "ChallengeCalculator.Console\ChallengeCalculator.Console.csproj", "{D8A9A040-96F8-4FD7-B448-B24C39468130}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{820E4790-A287-43FF-8D1B-28C48642FD05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{820E4790-A287-43FF-8D1B-28C48642FD05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{820E4790-A287-43FF-8D1B-28C48642FD05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{820E4790-A287-43FF-8D1B-28C48642FD05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E08F63D-3683-4245-B3FF-3C80E353351B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E08F63D-3683-4245-B3FF-3C80E353351B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E08F63D-3683-4245-B3FF-3C80E353351B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E08F63D-3683-4245-B3FF-3C80E353351B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8A9A040-96F8-4FD7-B448-B24C39468130}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8A9A040-96F8-4FD7-B448-B24C39468130}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8A9A040-96F8-4FD7-B448-B24C39468130}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8A9A040-96F8-4FD7-B448-B24C39468130}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
