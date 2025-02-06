@@ -8,16 +8,24 @@ namespace ChallengeCalculator.Console
     {
         static void Main(string[] args)
         {
+            // Process command line arguments
+            var alternateDelimiter = "\\n";
+            if (args.Length > 0 && args[0].StartsWith("--alt-delimiter="))
+            {
+                alternateDelimiter = args[0].Substring("--alt-delimiter=".Length);
+                System.Console.WriteLine($"Using alternate delimiter: '{alternateDelimiter}'");
+            }
+
             var calculator = new Calculator();
-            var parser = new Parser();
+            var parser = new Parser(alternateDelimiter);
 
             while (true)
             {
-                System.Console.WriteLine("\nEnter numbers separated by comma, '\\n', or use custom delimiter(s):");
-                System.Console.WriteLine("Examples: 1,2\\n3,4");
-                System.Console.WriteLine("         //#\\n2#5 (using # as delimiter)");
-                System.Console.WriteLine("         //[***]\\n11***22***33 (using *** as delimiter)");
-                System.Console.WriteLine("         //[*][!!][r9r]\\n11r9r22*33!!44 (using multiple delimiters)");
+                System.Console.WriteLine($"\nEnter numbers separated by comma, '{alternateDelimiter}', or use custom delimiter(s):");
+                System.Console.WriteLine($"Examples: 1,2{alternateDelimiter}3,4");
+                System.Console.WriteLine($"         //#\\n2#5 (using # as delimiter)");
+                System.Console.WriteLine($"         //[***]\\n11***22***33 (using *** as delimiter)");
+                System.Console.WriteLine($"         //[*][!!][r9r]\\n11r9r22*33!!44 (using multiple delimiters)");
                 System.Console.WriteLine("(numbers > 1000 will be ignored, press Ctrl+C to quit)");
                 var input = System.Console.ReadLine();
 
