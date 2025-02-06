@@ -1,5 +1,6 @@
 ﻿using ChallengeCalculator.Core;
 using System;
+using System.Linq;
 
 namespace ChallengeCalculator.Console
 {
@@ -27,9 +28,13 @@ namespace ChallengeCalculator.Console
                 {
                     var numbers = parser.Parse(input ?? string.Empty);
                     var result = calculator.Add(numbers);
+                    
+                    // Create formula string
+                    var formula = string.Join(" + ", numbers);
+                    
                     var currentColor = System.Console.ForegroundColor;
                     System.Console.ForegroundColor = ConsoleColor.Green;
-                    System.Console.WriteLine($"Result: {result}");
+                    System.Console.WriteLine($"{formula} = {result}");
                     System.Console.ForegroundColor = currentColor;
                 }
                 catch (ArgumentException ex)
