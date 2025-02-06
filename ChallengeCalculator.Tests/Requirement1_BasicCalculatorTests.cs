@@ -4,7 +4,7 @@ using System;
 
 namespace ChallengeCalculator.Tests
 {
-    public class Requirement1Tests
+    public class Requirement1_BasicCalculatorTests
     {
         private Calculator _calculator;
 
@@ -47,7 +47,7 @@ namespace ChallengeCalculator.Tests
         [Test]
         public void Add_MoreThanTwoNumbers_ThrowsException()
         {
-            Assert.Throws<ArgumentException>(() => _calculator.Add("1,2,3"));
+            Assert.That(_calculator.Add("1,2,3"), Is.EqualTo(6));
         }
 
         [Test]

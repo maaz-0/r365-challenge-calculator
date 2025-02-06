@@ -10,9 +10,6 @@ namespace ChallengeCalculator.Core
                 return 0;
 
             var parts = numbers.Split(',');
-            if (parts.Length > 2)
-                throw new ArgumentException("More than 2 numbers are not allowed");
-
             var sum = 0;
             foreach (var part in parts)
             {

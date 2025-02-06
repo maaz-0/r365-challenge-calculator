@@ -11,7 +11,7 @@ namespace ChallengeCalculator.Console
 
             while (true)
             {
-                System.Console.WriteLine("\nEnter numbers (max 2) separated by comma (or 'exit' to quit):");
+                System.Console.WriteLine("\nEnter numbers separated by comma (or 'exit' to quit):");
                 var input = System.Console.ReadLine();
 
                 if (input?.ToLower() == "exit")
@@ -21,10 +21,6 @@ namespace ChallengeCalculator.Console
                 {
                     var result = calculator.Add(input);
                     System.Console.WriteLine($"Result: {result}");
-                }
-                catch (ArgumentException ex)
-                {
-                    System.Console.WriteLine($"Error: {ex.Message}");
                 }
                 catch (Exception ex)
                 {
