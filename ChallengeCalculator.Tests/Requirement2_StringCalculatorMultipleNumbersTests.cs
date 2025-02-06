@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using ChallengeCalculator.Core;
+using ChallengeCalculator.Console;
 using System;
 
 namespace ChallengeCalculator.Tests
@@ -17,13 +18,15 @@ namespace ChallengeCalculator.Tests
         [Test]
         public void Add_MultipleNumbers_ReturnsSum()
         {
-            Assert.That(_calculator.Add("1,2,3,4,5,6,7,8,9,10,11,12"), Is.EqualTo(78));
+            var numbers = Program.ParseInput("1,2,3,4,5,6,7,8,9,10,11,12");
+            Assert.That(_calculator.Add(numbers), Is.EqualTo(78));
         }
 
         [Test]
         public void Add_MixOfValidAndInvalidNumbers_ReturnsSum()
         {
-            Assert.That(_calculator.Add("1,abc,2,def,3"), Is.EqualTo(6));
+            var numbers = Program.ParseInput("1,abc,2,def,3");
+            Assert.That(_calculator.Add(numbers), Is.EqualTo(6));
         }
     }
 } 

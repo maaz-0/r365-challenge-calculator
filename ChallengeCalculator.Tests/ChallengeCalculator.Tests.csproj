@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ChallengeCalculator.Core\ChallengeCalculator.Core.csproj" />
+    <ProjectReference Include="..\ChallengeCalculator.Console\ChallengeCalculator.Console.csproj" />
   </ItemGroup>
 
 </Project>

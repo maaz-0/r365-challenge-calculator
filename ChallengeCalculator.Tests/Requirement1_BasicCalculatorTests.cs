@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using ChallengeCalculator.Core;
+using ChallengeCalculator.Console;
 using System;
 
 namespace ChallengeCalculator.Tests
@@ -17,43 +18,43 @@ namespace ChallengeCalculator.Tests
         [Test]
         public void Add_EmptyString_Returns0()
         {
-            Assert.That(_calculator.Add(""), Is.EqualTo(0));
+            var numbers = Program.ParseInput("");
+            Assert.That(_calculator.Add(numbers), Is.EqualTo(0));
         }
 
         [Test]
         public void Add_SingleNumber_ReturnsThatNumber()
         {
-            Assert.That(_calculator.Add("20"), Is.EqualTo(20));
+            var numbers = Program.ParseInput("20");
+            Assert.That(_calculator.Add(numbers), Is.EqualTo(20));
         }
 
         [Test]
         public void Add_TwoNumbers_ReturnsSum()
         {
-            Assert.That(_calculator.Add("1,5000"), Is.EqualTo(5001));
+            var numbers = Program.ParseInput("1,5000");
+            Assert.That(_calculator.Add(numbers), Is.EqualTo(5001));
         }
 
         [Test]
         public void Add_NegativeNumbers_ReturnsSum()
         {
-            Assert.That(_calculator.Add("4,-3"), Is.EqualTo(1));
+            var numbers = Program.ParseInput("4,-3");
+            Assert.That(_calculator.Add(numbers), Is.EqualTo(1));
         }
 
         [Test]
         public void Add_InvalidNumber_TreatsAsZero()
         {
-            Assert.That(_calculator.Add("5,tytyt"), Is.EqualTo(5));
-        }
-
-        [Test]
-        public void Add_MoreThanTwoNumbers_ThrowsException()
-        {
-            Assert.That(_calculator.Add("1,2,3"), Is.EqualTo(6));
+            var numbers = Program.ParseInput("5,tytyt");
+            Assert.That(_calculator.Add(numbers), Is.EqualTo(5));
         }
 
         [Test]
         public void Add_SpacesAroundNumbers_HandlesCorrectly()
         {
-            Assert.That(_calculator.Add(" 1 , 2 "), Is.EqualTo(3));
+            var numbers = Program.ParseInput(" 1 , 2 ");
+            Assert.That(_calculator.Add(numbers), Is.EqualTo(3));
         }
     }
 } 

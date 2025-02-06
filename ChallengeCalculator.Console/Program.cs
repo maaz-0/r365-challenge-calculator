@@ -1,9 +1,12 @@
 ﻿using ChallengeCalculator.Core;
 using System;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace ChallengeCalculator.Console
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
@@ -11,7 +14,8 @@ namespace ChallengeCalculator.Console
 
             while (true)
             {
-                System.Console.WriteLine("\nEnter numbers separated by comma (or 'exit' to quit):");
+                System.Console.WriteLine("\nEnter numbers separated by comma or '\\n'.");
+                System.Console.WriteLine("Example: 1,2\\n3,4 (or type 'exit' to quit)");
                 var input = System.Console.ReadLine();
 
                 if (input?.ToLower() == "exit")
@@ -19,7 +23,8 @@ namespace ChallengeCalculator.Console
 
                 try
                 {
-                    var result = calculator.Add(input);
+                    var numbers = ParseInput(input ?? string.Empty);
+                    var result = calculator.Add(numbers);
                     System.Console.WriteLine($"Result: {result}");
                 }
                 catch (Exception ex)
@@ -27,6 +32,24 @@ namespace ChallengeCalculator.Console
                     System.Console.WriteLine($"An unexpected error occurred: {ex.Message}");
                 }
             }
+        }
+
+        public static int[] ParseInput(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input))
+                return Array.Empty<int>();
+
+            // Split by comma or \n
+            var numbers = Regex.Split(input, @",|\\n")
+                             .Where(s => !string.IsNullOrWhiteSpace(s))
+                             .Select(part =>
+                             {
+                                 int.TryParse(part.Trim(), out int number);
+                                 return number; // Returns 0 if parsing fails
+                             })
+                             .ToArray();
+
+            return numbers;
         }
     }
 }
