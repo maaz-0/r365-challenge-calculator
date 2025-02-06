@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
 
 namespace ChallengeCalculator.Core
 {
@@ -21,13 +22,52 @@ namespace ChallengeCalculator.Core
             {
                 if (input.StartsWith("//[") && input.Contains("]\\n"))
                 {
-                    // Format: //[delimiter]\n
-                    var closingBracketIndex = input.IndexOf("]\\n");
-                    if (closingBracketIndex > 3) // Make sure there's content between [ and ]
+                    // Handle multiple or single delimiters in bracket format
+                    var endOfDelimiters = input.IndexOf("\\n");
+                    if (endOfDelimiters > 0)
                     {
-                        var customDelimiter = input.Substring(3, closingBracketIndex - 3);
-                        delimiter = Regex.Escape(customDelimiter);
-                        numbersInput = input.Substring(closingBracketIndex + 3);
+                        var delimitersSection = input.Substring(2, endOfDelimiters - 2);
+                        numbersInput = input.Substring(endOfDelimiters + 2);
+
+                        if (delimitersSection.Count(c => c == '[') > 1)
+                        {
+                            // Multiple delimiters
+                            var delimiters = new List<string>();
+                            var currentDelimiter = "";
+                            var insideDelimiter = false;
+
+                            foreach (var c in delimitersSection)
+                            {
+                                if (c == '[')
+                                {
+                                    insideDelimiter = true;
+                                    currentDelimiter = "";
+                                }
+                                else if (c == ']')
+                                {
+                                    insideDelimiter = false;
+                                    if (!string.IsNullOrEmpty(currentDelimiter))
+                                    {
+                                        delimiters.Add(Regex.Escape(currentDelimiter));
+                                    }
+                                }
+                                else if (insideDelimiter)
+                                {
+                                    currentDelimiter += c;
+                                }
+                            }
+
+                            delimiter = string.Join("|", delimiters) + "|\\\\n"; // Add newline as a delimiter
+                        }
+                        else
+                        {
+                            // Single delimiter in brackets
+                            var match = Regex.Match(delimitersSection, @"\[(.*?)\]");
+                            if (match.Success)
+                            {
+                                delimiter = Regex.Escape(match.Groups[1].Value) + "|\\\\n"; // Add newline as a delimiter
+                            }
+                        }
                     }
                 }
                 else
@@ -36,7 +76,7 @@ namespace ChallengeCalculator.Core
                     var parts = input.Split(new[] { "\\n" }, 2, StringSplitOptions.None);
                     if (parts.Length == 2)
                     {
-                        delimiter = Regex.Escape(parts[0].Substring(2));
+                        delimiter = Regex.Escape(parts[0].Substring(2)) + "|\\\\n"; // Add newline as a delimiter
                         numbersInput = parts[1];
                     }
                 }

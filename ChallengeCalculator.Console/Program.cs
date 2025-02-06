@@ -12,10 +12,11 @@ namespace ChallengeCalculator.Console
 
             while (true)
             {
-                System.Console.WriteLine("\nEnter numbers separated by comma, '\\n', or use a custom delimiter:");
+                System.Console.WriteLine("\nEnter numbers separated by comma, '\\n', or use custom delimiter(s):");
                 System.Console.WriteLine("Examples: 1,2\\n3,4");
                 System.Console.WriteLine("         //#\\n2#5 (using # as delimiter)");
                 System.Console.WriteLine("         //[***]\\n11***22***33 (using *** as delimiter)");
+                System.Console.WriteLine("         //[*][!!][r9r]\\n11r9r22*33!!44 (using multiple delimiters)");
                 System.Console.WriteLine("(numbers > 1000 will be ignored, type 'exit' to quit)");
                 var input = System.Console.ReadLine();
 
