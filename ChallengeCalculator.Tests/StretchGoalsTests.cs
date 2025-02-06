@@ -151,5 +151,55 @@ namespace ChallengeCalculator.Tests
             var ex = Assert.Throws<ArgumentException>(() => parser.Parse(input));
             Assert.That(ex.Message, Is.EqualTo("Input includes negative numbers: -2"));
         }
+
+        [Test]
+        public void Add_CustomUpperBound_IgnoresNumbersAboveBound()
+        {
+            var parser = new Parser("\\n", false, 500);
+            var input = "1,501,2,600,3";
+            var numbers = parser.Parse(input);
+            var result = _calculator.Add(numbers);
+            Assert.That(result, Is.EqualTo(6)); // 1 + 0 + 2 + 0 + 3
+        }
+
+        [Test]
+        public void Add_CustomUpperBound_AllowsNumbersUpToBound()
+        {
+            var parser = new Parser("\\n", false, 500);
+            var input = "1,500,2,499,3";
+            var numbers = parser.Parse(input);
+            var result = _calculator.Add(numbers);
+            Assert.That(result, Is.EqualTo(1005)); // 1 + 500 + 2 + 499 + 3
+        }
+
+        [Test]
+        public void Add_CustomUpperBound_WithAlternateDelimiter()
+        {
+            var parser = new Parser("|", false, 100);
+            var input = "1|101|2|99|3";
+            var numbers = parser.Parse(input);
+            var result = _calculator.Add(numbers);
+            Assert.That(result, Is.EqualTo(105)); // 1 + 0 + 2 + 99 + 3
+        }
+
+        [Test]
+        public void Add_CustomUpperBound_WithCustomDelimiter()
+        {
+            var parser = new Parser("\\n", false, 50);
+            var input = "//[***]\\n1***51***2***49***3";
+            var numbers = parser.Parse(input);
+            var result = _calculator.Add(numbers);
+            Assert.That(result, Is.EqualTo(55)); // 1 + 0 + 2 + 49 + 3
+        }
+
+        [Test]
+        public void Add_CustomUpperBound_WithNegativeNumbersAllowed()
+        {
+            var parser = new Parser("\\n", true, 100);
+            var input = "1,101,-2,99,-3";
+            var numbers = parser.Parse(input);
+            var result = _calculator.Add(numbers);
+            Assert.That(result, Is.EqualTo(95)); // 1 + 0 + (-2) + 99 + (-3)
+        }
     }
 } 

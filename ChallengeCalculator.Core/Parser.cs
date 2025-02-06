@@ -7,14 +7,15 @@ namespace ChallengeCalculator.Core
 {
     public class Parser
     {
-        private const int MaxValidNumber = 1000;
+        private readonly int _maxValidNumber;
         private readonly string _alternateDelimiter;
         private readonly bool _allowNegativeNumbers;
 
-        public Parser(string alternateDelimiter = "\\n", bool allowNegativeNumbers = false)
+        public Parser(string alternateDelimiter = "\\n", bool allowNegativeNumbers = false, int maxValidNumber = 1000)
         {
             _alternateDelimiter = alternateDelimiter;
             _allowNegativeNumbers = allowNegativeNumbers;
+            _maxValidNumber = maxValidNumber;
         }
 
         public int[] Parse(string input)
@@ -138,7 +139,7 @@ namespace ChallengeCalculator.Core
         {
             if (int.TryParse(part.Trim(), out int number))
             {
-                return number > MaxValidNumber ? 0 : number;
+                return number > _maxValidNumber ? 0 : number;
             }
             return 0;
         }

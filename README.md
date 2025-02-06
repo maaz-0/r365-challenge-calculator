@@ -27,7 +27,7 @@ dotnet build
 
 3. Run the console application:
 ```bash
-# Run with default settings (negative numbers not allowed)
+# Run with default settings (negative numbers not allowed, upper bound 1000)
 cd ChallengeCalculator.Console
 dotnet run
 
@@ -37,8 +37,11 @@ dotnet run --alt-delimiter=|
 # Run with negative numbers allowed
 dotnet run --allow-negative
 
-# Run with both options
-dotnet run --alt-delimiter=| --allow-negative
+# Run with custom upper bound
+dotnet run --upper-bound=500
+
+# Run with multiple options
+dotnet run --alt-delimiter=| --allow-negative --upper-bound=500
 ```
 
 ## Command-line Arguments
@@ -59,11 +62,18 @@ The application supports the following command-line arguments:
   # Input: 1,-2,3,-4 will return -2 (1 + -2 + 3 + -4)
   ```
 
+- `--upper-bound=<number>`: Set the maximum valid number (numbers above this are treated as 0)
+  ```bash
+  # Example with custom upper bound of 500
+  dotnet run --upper-bound=500
+  # Input: 1,501,2,499,3 will return 505 (1 + 0 + 2 + 499 + 3)
+  ```
+
 Arguments can be combined:
 ```bash
-# Use | as delimiter and enable negative numbers
-dotnet run --alt-delimiter=| --allow-negative
-# Input: 1|-2|3 will return 2 (1 + -2 + 3)
+# Use all options together
+dotnet run --alt-delimiter=| --allow-negative --upper-bound=500
+# Input: 1|-2|501|3 will return 2 (1 + -2 + 0 + 3)
 ```
 
 ## Input Formats
@@ -98,7 +108,8 @@ The calculator supports various input formats:
 
 ## Rules
 
-- Numbers greater than 1000 are ignored
+- Numbers greater than the upper bound (default 1000) are ignored
+  - Upper bound can be configured with --upper-bound flag
 - Negative numbers:
   - Not allowed by default
   - Can be enabled with --allow-negative flag
